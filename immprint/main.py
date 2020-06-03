@@ -80,8 +80,8 @@ def parse_arguments():
     if I is None:
         axes = [axes]
     x1, y1 = immprint.S_graph(parms["µS1"])
-     axes[0].plot(x1, y1, color=sns.color_palette()[0],
-            label="Same patient")
+    axes[0].plot(x1, y1, color=sns.color_palette()[0],
+                 label="Same patient")
     axes[0].axvline(S, color=sns.color_palette()[1], label="Measured")
     axes[0].axvline(parms['rS'], color='k', ls='--', label="Threshold")
     x2, y2 = immprint.S_graph(parms["µS2"])
