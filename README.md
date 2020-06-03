@@ -7,7 +7,7 @@ Immprint is a command-line tool built to identify the origine of T-cell samples.
 Clone or download the repository, then run:
 ```sh
 cd Immprint
-pip3 install .
+pip3 install ./olga3 .
 ```
 
 ## Usage
