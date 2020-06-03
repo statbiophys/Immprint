@@ -49,7 +49,6 @@ def parse_arguments():
                                                       full=args.full,
                                                       use_counts=(not args.nocounts),
                                                       onlyS=args.onlyS)
-    print(shared_sequences)
 
     print(f"Number of sequences shared between the two datasets: S = {S}")
     if not args.onlyS:
@@ -57,12 +56,12 @@ def parse_arguments():
 
             
     under_threshold = (S < parms['rS'] if args.onlyS else I < parms['rI'])
-    ambiguous = (under_threshold and parms['pv1'] > 1e-4) or (not under_threshold and pv2 > 1e-4)
+    ambiguous = (under_threshold and parms['pv1'] > 1e-4) or (not under_threshold and parms['pv2'] > 1e-4)
 
     if ambiguous:
         print("Ambiguous case: maybe not enough sequences.\n"
               f"- Probability the two samples come from the same patient <= {parms['pv1']:.2}\n"
-              f"- Probability the two samples come from different patients <= {pv2:.2}\n")
+              f"- Probability the two samples come from different patients <= {parms['pv2']:.2}\n")
     else:
         if under_threshold: # different patients
             print("The samples come from two different patients.\n"

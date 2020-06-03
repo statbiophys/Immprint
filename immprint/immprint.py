@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
 import inspect
+import scipy
 import scipy.stats
 from pathlib import Path
 import olga3
 import olga3.load_model
 import olga3.generation_probability
 import mpmath
-import gmpy2
 
 
 translate_header = {
@@ -105,31 +105,30 @@ def compute_pgen(seq, full=False):
 
 def boundI1(r, meanS1, µp, σp, maxM=None):
     """ return an upper bound for P[I(A, B) < r | A&B autologous] """
-    λ = gmpy2.mpfr(meanS1) # parameter of the poisson law
+    λ = meanS1 # parameter of the poisson law
     if maxM is None:
         maxM = int(5 * meanS1)
     ks = range(1, maxM)
-    poiss = [λ**k/gmpy2.fac(k) * gmpy2.exp(-λ) for k in ks]
-    norms =  [1/2*(1 + gmpy2.erf((r - μp * k)/(gmpy2.sqrt(2 * k) * σp))) for k in ks]
+    poiss = [scipy.stats.poisson.pmf(k, λ) for k in ks]
+    norms =  [1/2*(1 + scipy.special.erf((r - μp * k)/(np.sqrt(2 * k) * σp))) for k in ks]
     if r <= 0:
         return 0.
     else:
-        return float(gmpy2.fsum([p * n for p, n in zip(poiss, norms)]) + 
-                gmpy2.exp(-λ))
+        return sum([p * n for p, n in zip(poiss, norms)]) + np.exp(-λ)
 
 
 def boundI2(r, meanS2, µp, σp, maxM=None):
     """ return an upper bound for P[I(A, B) >= r | A&B not autologous] """
-    λ = gmpy2.mpfr(meanS2) # parameter of the poisson law
+    λ = meanS2 # parameter of the poisson law
     if maxM is None:
         maxM = int(5*meanS2)
     ks = range(0, maxM)
-    poiss =  [gmpy2.exp(-λ)/gmpy2.fac(k) * λ**k for k in ks]
-    norms = [1/2*(1 + gmpy2.erf((r - μp * k)/(gmpy2.sqrt(2 * k) * σp))) 
+    poiss =  [scipy.stats.poisson.pmf(k, λ) for k in ks]
+    norms = [1/2*(1 + scipy.special.erf((r - μp * k)/(np.sqrt(2 * k) * σp))) 
              if k > 0 else 1 for k in ks]
 
     if r > 0:
-        return float(gmpy2.fsum([p * (1-n) for p, n in zip(poiss, norms)]))
+        return sum([p * (1-n) for p, n in zip(poiss, norms)])
     else:
         return 1.
 
@@ -180,10 +179,10 @@ def estimate_S_from_counts(dfA, dfB):
     M2 = len(cBs)
     M1 = len(cAs)
     # The formula below remove the bias associated with sampling
-    Sest = sum([1 + (gmpy2.bincoef(0, int(c)) 
-                  - gmpy2.bincoef(M2, int(c))
-                  - gmpy2.bincoef(M1, int(c)))
-             /gmpy2.bincoef(M1+M2, int(c))  
+    Sest = sum([1 + (mpmath.binomial(0, int(c)) 
+                  - mpmath.binomial(M2, int(c))
+                  - mpmath.binomial(M1, int(c)))
+             /mpmath.binomial(M1+M2, int(c))  
              for c in cs["read_count"].values if int(c) != 0])
     return float(Sest)
     
