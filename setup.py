@@ -20,6 +20,7 @@ setup(name='immprint',
             'Natural Language :: English',
             'Programming Language :: Python :: 3.6',
             ],
+      setup_requires=['wheel'],
       entry_points={'console_scripts': 'immprint = immprint.main:parse_arguments'},
       python_requires='>=3.6',
       packages=find_packages())
