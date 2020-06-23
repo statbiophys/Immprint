@@ -65,17 +65,19 @@ def parse_arguments():
 
     if ambiguous:
         print("Ambiguous case: maybe not enough sequences.\n"
-              f"- Same patients: p-value <= {parms['pv1']:.2}\n"
-              f"- Different patients: p-value <= {parms['pv2']:.2}\n")
+              f"- Same donors (null hypothesis): p-value ≤ {parms['pv1']:.2}\n"
+              f"- Different donors (null hypothesis): p-value ≤ {parms['pv2']:.2}\n")
     else:
-        if under_threshold: # different patients
-            print("The samples come from two different patients.\n"
-                  f"p-value {parms['pv1']:.2e}")
-        if not under_threshold: # same patient
-            print(f"The samples come from the same patient.\n"
-                  f"p-value: {parms['pv2']:.2e}. \n")
+        if under_threshold: # different donors
+            print("The samples come from two different donors.\n"
+                  f"Different donors (null hypothesis): p-value ≤ {parms['pv1']:.2e}")
+        if not under_threshold: # same donor
+            print(f"The samples come from the same donor.\n"
+                  f"Same donor (null hypothesis): p-value ≤ {parms['pv2']:.2e}. \n")
 
-    ## XXXX for "full", the number of sequences needed to associate two samples to the same patient is ridicully low, so just sequencing error + chimera pcr + sequencing multiple samples together => risk of identification error increasing
+        
+
+    ## XXXX for "full", the number of sequences needed to associate two samples to the same donor is ridicully low, so just sequencing error + chimera pcr + sequencing multiple samples together => risk of identification error increasing
 
     ## plotting can be quite sloooooow, deal with that
         
@@ -84,12 +86,12 @@ def parse_arguments():
         axes = [axes]
     x1, y1 = immprint.S_graph(parms["µS1"])
     axes[0].plot(x1, y1/y1.max(), color=sns.color_palette()[0],
-                 label="Same patient")
+                 label="Same donor")
     axes[0].axvline(S, color=sns.color_palette()[1], label="Measured")
     axes[0].axvline(parms['rS'], color='k', ls='--', label="Threshold")
     x2, y2 = immprint.S_graph(parms["µS2"])
     axes[0].plot(x2, y2/y2.max(), color=sns.color_palette()[1],
-            label="Different patients")
+            label="Different donors")
     axes[0].set_ylim((0, 1))
     axes[0].set_xscale('symlog')
     axes[0].set_xlabel(r"$\mathcal{S}$")
@@ -98,12 +100,12 @@ def parse_arguments():
     if not args.onlyS:
         x1, y1 = immprint.I_graph(parms["µS1"], parms["µ_logpgen"], parms["σ_logpgen"])
         axes[1].plot(x1, y1/y1.max(), color=sns.color_palette()[0],
-                label="Same patients")
+                label="Same donor")
         axes[1].axvline(I, color=sns.color_palette()[1], label="Measured")
         axes[1].axvline(parms['rI'], color='k', ls='--', label="Threshold")
         x2, y2 = immprint.I_graph(parms["µS2"], parms["µ_logpgen_shared"], parms["σ_logpgen_shared"])
         axes[1].plot(x2, y2/y2.max(), color=sns.color_palette()[1],
-                label="Different patient")
+                label="Different donors")
         axes[1].set_xscale('symlog')
         axes[1].set_ylim((0, 1))
         axes[1].set_xlabel(r"$\mathcal{I}$")
