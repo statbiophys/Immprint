@@ -247,7 +247,7 @@ def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.i
 
 
     µS2 = (1e-13 if full else 3.0e-07) * MA * MB  # default value (not autologous case)
-    µS1 = 7.96e-07 * MA * MB  # default values (autologous)
+    µS1 = µS1_default = 7.96e-07 * MA * MB  # default values (autologous)
     if "read_count" in dfA.keys() and "read_count" in dfB.keys() and use_counts:
         µS1 = estimate_S_from_counts(dfA, dfB)
     elif use_counts:
@@ -274,7 +274,7 @@ def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.i
 
     # the "threshold" choices for the "full" case are mostly arbitrary.
     # their exact value does not matter, in general.
-    
+    print(pv1, pv2)
     return (S, I,
             shared_sequences,
             {"µS1": µS1, "µS2": µS2,
@@ -283,8 +283,8 @@ def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.i
              "µ_logpgen": µ_logpgen,
              "σ_logpgen": σ_logpgen,
              "pv1": pv1, "pv2": pv2,
-             "rS": (1e-8 * MA * MB if full else 3e-6 * MA * MB),
-             "rI": (1e-7 * MA * MB if full else 3e-5 * MA * MB)})
+             "rS": (µS1 + µS2)/2,
+             "rI": (µS1 * µ_logpgen + µS2 * µ_logpgen_shared)/2})
 
 
 

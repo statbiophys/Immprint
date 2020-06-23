@@ -65,16 +65,15 @@ def parse_arguments():
 
     if ambiguous:
         print("Ambiguous case: maybe not enough sequences.\n"
-              f"- Probability the two samples come from the same patient <= {parms['pv1']:.2}\n"
-              f"- Probability the two samples come from different patients <= {parms['pv2']:.2}\n")
+              f"- Same patients: p-value <= {parms['pv1']:.2}\n"
+              f"- Different patients: p-value <= {parms['pv2']:.2}\n")
     else:
         if under_threshold: # different patients
             print("The samples come from two different patients.\n"
-                  f"The probability that they are autologous is lower than {parms['pv1']:.2e}")
+                  f"p-value {parms['pv1']:.2e}")
         if not under_threshold: # same patient
             print(f"The samples come from the same patient.\n"
-                  f"The probability that they were extracted in two "
-                  f" different individuals is lower than {parms['pv1']:.2e}")
+                  f"p-value: {parms['pv2']:.2e}. \n")
 
     ## XXXX for "full", the number of sequences needed to associate two samples to the same patient is ridicully low, so just sequencing error + chimera pcr + sequencing multiple samples together => risk of identification error increasing
 
