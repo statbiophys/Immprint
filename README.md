@@ -4,6 +4,7 @@ Immprint is a command-line tool built to identify the origine of T-cell samples.
 
 ## Installation 
 
+Immprint requires a recent version of python3 and pip3.
 Clone or download the repository, then run:
 ```sh
 cd Immprint

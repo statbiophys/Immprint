@@ -27,6 +27,7 @@ setup(name='olga3',
             'Programming Language :: Python :: 3.6',
             ],
       packages=find_packages(),
+      packages_dir={'olga3': 'olga3'},
       package_data = {
             'default_models': [],
             'default_models/human_T_alpha/': ['default_models/human_T_alpha/*'],
