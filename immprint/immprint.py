@@ -229,7 +229,7 @@ def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.i
         # TRA:..,TRB:...
         pgens = [compute_pgen(s, full=full) for s in shared_sequences]
         # too low pgens are ignored (sequencing error / bad model)
-        I = -sum(np.log(p) for p in pgens if p > 1e-50)
+        I = sum(-np.log(p) - γ for p in pgens if p > 1e-50)
     
     # the mean of pgen is used to estimate I, it depends on
     # the choice of model and on the scenario (homologous or

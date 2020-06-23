@@ -27,7 +27,7 @@ def parse_arguments():
                         action='store_true')
     parser.add_argument('-g', '--gamma', dest='gamma',
                         help="Parameter involved in the estimation of I (default 12), reasonable values: [0, 15].",
-                        type=float, action='store_true', default=12.)
+                        action='store', default=12., type=float)
 
 
     args = parser.parse_args()
@@ -84,27 +84,29 @@ def parse_arguments():
     if I is None:
         axes = [axes]
     x1, y1 = immprint.S_graph(parms["µS1"])
-    axes[0].plot(x1, y1, color=sns.color_palette()[0],
+    axes[0].plot(x1, y1/y1.max(), color=sns.color_palette()[0],
                  label="Same patient")
     axes[0].axvline(S, color=sns.color_palette()[1], label="Measured")
     axes[0].axvline(parms['rS'], color='k', ls='--', label="Threshold")
     x2, y2 = immprint.S_graph(parms["µS2"])
-    axes[0].plot(x2, y2, color=sns.color_palette()[1],
+    axes[0].plot(x2, y2/y2.max(), color=sns.color_palette()[1],
             label="Different patients")
-    axes[0].set_ylim((0, 1.5*min(max(y2), max(y1))))
+    axes[0].set_ylim((0, 1))
+    axes[0].set_xscale('symlog')
     axes[0].set_xlabel(r"$\mathcal{S}$")
     axes[0].legend()
 
     if not args.onlyS:
         x1, y1 = immprint.I_graph(parms["µS1"], parms["µ_logpgen"], parms["σ_logpgen"])
-        axes[1].plot(x1, y1, color=sns.color_palette()[0],
+        axes[1].plot(x1, y1/y1.max(), color=sns.color_palette()[0],
                 label="Same patients")
         axes[1].axvline(I, color=sns.color_palette()[1], label="Measured")
         axes[1].axvline(parms['rI'], color='k', ls='--', label="Threshold")
         x2, y2 = immprint.I_graph(parms["µS2"], parms["µ_logpgen_shared"], parms["σ_logpgen_shared"])
-        axes[1].plot(x2, y2, color=sns.color_palette()[1],
+        axes[1].plot(x2, y2/y2.max(), color=sns.color_palette()[1],
                 label="Different patient")
-        axes[1].set_ylim((0, 1.5*min(max(y2), max(y1))))
+        axes[1].set_xscale('symlog')
+        axes[1].set_ylim((0, 1))
         axes[1].set_xlabel(r"$\mathcal{I}$")
         axes[1].legend()
     plt.show()
