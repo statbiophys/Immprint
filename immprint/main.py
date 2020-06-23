@@ -25,6 +25,10 @@ def parse_arguments():
     parser.add_argument('-n', '--no-counts', dest='nocounts',
                         help="If specified, don't use read counts, even if provided",
                         action='store_true')
+    parser.add_argument('-g', '--gamma', dest='gamma',
+                        help="Parameter involved in the estimation of I (default 12), reasonable values: [0, 15].",
+                        type=float, action='store_true', default=12.)
+
 
     args = parser.parse_args()
 
@@ -48,7 +52,8 @@ def parse_arguments():
     S, I, shared_sequences, parms = immprint.immprint(dfA, dfB,
                                                       full=args.full,
                                                       use_counts=(not args.nocounts),
-                                                      onlyS=args.onlyS)
+                                                      onlyS=args.onlyS,
+                                                      γ=args.gamma)
 
     print(f"Number of sequences shared between the two datasets: S = {S}")
     if not args.onlyS:

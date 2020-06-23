@@ -187,7 +187,7 @@ def estimate_S_from_counts(dfA, dfB):
     return float(Sest)
     
 
-def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.inf):
+def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.inf, γ=12):
     """Main immprint function
     Arguments:
     - dfA, dfB: dataframe containing a column `cdr3_nt` (and optionally a column `read_count`)
@@ -240,9 +240,9 @@ def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.i
         µ_logpgen = 47
         σ_logpgen = 8
     else: 
-        µ_logpgen_shared = 18
+        µ_logpgen_shared = 18 - γ
         σ_logpgen_shared = 2
-        µ_logpgen = 26
+        µ_logpgen = 26 - γ
         σ_logpgen = 6
 
 

@@ -22,5 +22,13 @@ setup(name='immprint',
             ],
       setup_requires=['wheel'],
       entry_points={'console_scripts': 'immprint = immprint.main:parse_arguments'},
+      install_requires=[
+          'olga3',
+          'numpy',
+          'pandas',
+          'scipy',
+          'mpmath',
+          'seaborn'
+      ],
       python_requires='>=3.6',
       packages=find_packages())
