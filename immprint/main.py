@@ -62,6 +62,8 @@ def parse_arguments():
             
     under_threshold = (S < parms['rS'] if args.onlyS else I < parms['rI'])
     ambiguous = (under_threshold and parms['pv1'] > 1e-4) or (not under_threshold and parms['pv2'] > 1e-4)
+    parms['pv1'] = max(parms['pv1'], 1e-30)
+    parms['pv2'] = max(parms['pv2'], 1e-30)
 
     if ambiguous:
         print("Ambiguous case: maybe not enough sequences.\n"

@@ -274,7 +274,6 @@ def immprint(dfA, dfB, full=False, use_counts=True, onlyS=False, max_shared=np.i
 
     # the "threshold" choices for the "full" case are mostly arbitrary.
     # their exact value does not matter, in general.
-    print(pv1, pv2)
     return (S, I,
             shared_sequences,
             {"µS1": µS1, "µS2": µS2,
