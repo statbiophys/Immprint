@@ -87,7 +87,7 @@ def parse_arguments():
     x1, y1 = immprint.S_graph(parms["µS1"])
     axes[0].plot(x1, y1/y1.max(), color=sns.color_palette()[0],
                  label="Same donor")
-    axes[0].axvline(S, color=sns.color_palette()[1], label="Measured")
+    axes[0].axvline(S, color=sns.color_palette()[2], label="Measured")
     axes[0].axvline(parms['rS'], color='k', ls='--', label="Threshold")
     x2, y2 = immprint.S_graph(parms["µS2"])
     axes[0].plot(x2, y2/y2.max(), color=sns.color_palette()[1],
@@ -101,7 +101,7 @@ def parse_arguments():
         x1, y1 = immprint.I_graph(parms["µS1"], parms["µ_logpgen"], parms["σ_logpgen"])
         axes[1].plot(x1, y1/y1.max(), color=sns.color_palette()[0],
                 label="Same donor")
-        axes[1].axvline(I, color=sns.color_palette()[1], label="Measured")
+        axes[1].axvline(I, color=sns.color_palette()[2], label="Measured")
         axes[1].axvline(parms['rI'], color='k', ls='--', label="Threshold")
         x2, y2 = immprint.I_graph(parms["µS2"], parms["µ_logpgen_shared"], parms["σ_logpgen_shared"])
         axes[1].plot(x2, y2/y2.max(), color=sns.color_palette()[1],
