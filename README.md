@@ -40,5 +40,6 @@ Or with full receptors:
 
 ## Caveats
 
-
+- Only works for human TCR, and only for the beta chain when using single chain.
+- For datasets sequenced on the same lane, with barcodes, some amount of contamination is expected. This shouldn't influence immprint, except potentially for small samples when using the full receptor.
 
