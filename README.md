@@ -43,3 +43,5 @@ Or with full receptors:
 - Only works for human TCR, and only for the beta chain when using single chain.
 - For datasets sequenced on the same lane, with barcodes, some amount of contamination is expected. This shouldn't influence immprint, except potentially for small samples when using the full receptor.
 
+## Companion paper
+The github associated with the paper "Immune fingerprinting" can be found [here](https://github.com/statbiophys/Immune-fingerprinting).
